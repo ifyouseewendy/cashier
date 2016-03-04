@@ -23,7 +23,8 @@ Or install it yourself as:
 Initialize and configure
 
 ```ruby
-cashier = Cashier.new '没钱赚商店', File.open('inventory.yml')
+shop = Shop.new('没钱赚商店', File.new('inventory.yml'))
+cashier = Cashier.new(shop)
 
 cashier.configure do |config|
   config.add_promotion PromoteByCount.new('买二赠一'),  apply_to: ['ITEM000001', 'ITEM000003'], priority: 1

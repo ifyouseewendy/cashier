@@ -1,0 +1,18 @@
+- name: '羽毛球'
+  price: 1.00
+  unit: '个'
+  category: '球类'
+  bar_code: 'ITEM000001'
+
+- name: '苹果'
+  price: 5.50
+  unit: '斤'
+  category: '水果'
+  bar_code: 'ITEM000003'
+
+- name: '可口可乐'
+  price: 3.00
+  unit: '瓶'
+  category: '饮品'
+  bar_code: 'ITEM000005'
+
