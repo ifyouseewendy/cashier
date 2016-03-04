@@ -1,8 +1,6 @@
 # Cashier
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/cashier`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+A simulated cash machine, only support scan and print right now.
 
 ## Installation
 
@@ -22,13 +20,36 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Initialize and configure
 
-## Development
+```ruby
+cashier = Cashier.new '没钱赚商店', File.open('inventory.yml')
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake test` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+cashier.configure do |config|
+  config.add_promotion PromoteByCount.new('买二赠一'),  apply_to: ['ITEM000001', 'ITEM000003'], priority: 1
+  config.add_promotion PromoteByDiscount.new('95折'),   apply_to: ['ITEM000005']
+end
+```
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+Scan items
+
+```ruby
+cashier.scan 'ITEM000001'
+cashier.scan 'ITEM000001'
+cashier.scan 'ITEM000001'
+cashier.scan 'ITEM000001'
+cashier.scan 'ITEM000001'
+cashier.scan 'ITEM000003', count: 2
+cashier.scan 'ITEM000005'
+cashier.scan 'ITEM000005'
+cashier.scan 'ITEM000005'
+```
+
+Print
+
+```ruby
+cashier.print
+```
 
 ## Contributing
 
