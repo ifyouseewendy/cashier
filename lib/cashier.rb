@@ -15,7 +15,7 @@ class Cashier
   attr_accessor :buffer
 
   def initialize(shop)
-    @shop = shop
+    @shop   = shop
     @buffer = Buffer.new([], [], Hash.new{|h,k| h[k] = [] })
   end
 
@@ -33,9 +33,10 @@ class Cashier
       total_cost += info[:cost]
       total_save += info[:save]
 
-      buffer.headers << info[:header]
+      print_info = info[:print]
+      buffer.headers << print_info[:header]
 
-      append = info[:append]
+      append = print_info[:append]
       buffer.additions[append[:name]] << append[:detail] unless append.nil?
     end
 

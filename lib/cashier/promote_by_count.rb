@@ -32,8 +32,10 @@ class PromoteByCount
     {
       cost: promote_cost,
       save: save,
-      header: header,
-      append: append
+      print: {
+        header: header,
+        append: append
+      }
     }
   end
 end

@@ -7,8 +7,10 @@ class NoPromote
     {
       cost: cost,
       save: 0,
-      header: header,
-      append: nil
+      print: {
+        header: header,
+        append: nil
+      }
     }
   end
 end

@@ -23,8 +23,10 @@ class PromoteByDiscount
     {
       cost: promote_cost,
       save: save,
-      header: header,
-      append: nil
+      print: {
+        header: header,
+        append: nil
+      }
     }
   end
 end
