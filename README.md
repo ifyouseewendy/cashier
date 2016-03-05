@@ -1,6 +1,6 @@
 # Cashier
 
-A simulated cash machine, only support scan and print right now.
+A simulated cash machine, only support print right now.
 
 ## Installation
 
@@ -23,11 +23,11 @@ Or install it yourself as:
 Initialize and configure
 
 ```ruby
-shop = Shop.new('没钱赚商店', File.new('inventory.yml'))
+shop    = Shop.new('没钱赚商店', File.new('test/fixtures/inventory.yml'))
 cashier = Cashier.new(shop)
 
 cashier.add_promotion PromoteByCount.new('买二赠一'),  apply_to: ['ITEM000001', 'ITEM000005'], priority: 1
-cashier.add_promotion PromoteByDiscount.new('95折'),   apply_to: ['ITEM000003']
+cashier.add_promotion PromoteByDiscount.new('95折'),  apply_to: ['ITEM000003']
 ```
 
 Print

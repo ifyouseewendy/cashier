@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["ifyouseewendy@gmail.com"]
 
   spec.summary       = %q{A simulated cash machine.}
-  spec.description   = %q{A simulated cash machine, only support scan and print right now.}
+  spec.description   = %q{A simulated cash machine, only support print right now.}
   spec.homepage      = "https://github.com/ifyouseewendy/cashier"
   spec.license       = "MIT"
 
