@@ -16,16 +16,14 @@ class Cashier
 
   def initialize(shop)
     @shop = shop
-    @buffer = []
+    @buffer = Buffer.new([], [], Hash.new{|h,k| h[k] = [] })
   end
 
   def print(json)
     counter = aggregate_from(json)
 
-    headers   = []
-    headers << "***<#{shop.name}>购物清单***"
+    buffer.headers << "***<#{shop.name}>购物清单***"
 
-    additions = Hash.new{|h,k| h[k] = [] }
     total_cost, total_save = [0]*2
 
     counter.each do |bar_code, count|
@@ -35,31 +33,36 @@ class Cashier
       total_cost += info[:cost]
       total_save += info[:save]
 
-      headers << info[:header]
+      buffer.headers << info[:header]
 
       append = info[:append]
-      additions[append[:name]] << append[:detail] unless append.nil?
+      buffer.additions[append[:name]] << append[:detail] unless append.nil?
     end
 
-    buffer << headers.join("\n")
+    buffer.footers << ("总计：%.2f(元)" % total_cost)
+    buffer.footers << ("节省：%.2f(元)" % total_save) unless total_save.zero?
+    buffer.footers << "**********************"
 
-    addition = additions.reduce([]) { |ar, (k,v)|
-      ar << (["#{k}商品："] + v).join("\n")
-    }.join("\n")
-
-    buffer << addition unless addition.empty?
-
-    footers = []
-    footers << ("总计：%.2f(元)" % total_cost)
-    footers << ("节省：%.2f(元)" % total_save) unless total_save.zero?
-    footers << "**********************"
-
-    buffer << footers.join("\n")
-
-    buffer.join("\n----------------------\n")
+    buffer.print
   end
 
   private
+
+    Buffer = Struct.new(:headers, :footers, :additions) do
+      def print
+        header = headers.join("\n")
+
+        addition = additions.reduce([]) { |ar, (k,v)|
+          ar << (["#{k}商品："] + v).join("\n")
+        }.join("\n")
+
+        footer = footers.join("\n")
+
+        [header, addition, footer]
+          .reject(&:empty?)
+          .join("\n----------------------\n")
+      end
+    end
 
     def aggregate_from(json)
       JSON.parse(json).reduce(Hash.new(0)) do |ret, code|
