@@ -1,3 +1,3 @@
-module Cashier
+class Cashier
   VERSION = "0.1.0"
 end
