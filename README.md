@@ -26,36 +26,27 @@ Initialize and configure
 shop = Shop.new('没钱赚商店', File.new('inventory.yml'))
 cashier = Cashier.new(shop)
 
-cashier.configure do |config|
-  config.add_promotion PromoteByCount.new('买二赠一'),  apply_to: ['ITEM000001', 'ITEM000003'], priority: 1
-  config.add_promotion PromoteByDiscount.new('95折'),   apply_to: ['ITEM000005']
-end
-```
-
-Scan items
-
-```ruby
-cashier.scan 'ITEM000001'
-cashier.scan 'ITEM000001'
-cashier.scan 'ITEM000001'
-cashier.scan 'ITEM000001'
-cashier.scan 'ITEM000001'
-cashier.scan 'ITEM000003', count: 2
-cashier.scan 'ITEM000005'
-cashier.scan 'ITEM000005'
-cashier.scan 'ITEM000005'
+cashier.add_promotion PromoteByCount.new('买二赠一'),  apply_to: ['ITEM000001', 'ITEM000005'], priority: 1
+cashier.add_promotion PromoteByDiscount.new('95折'),   apply_to: ['ITEM000003']
 ```
 
 Print
 
 ```ruby
-cashier.print
+data = JSON.dump \
+  [
+    "ITEM000001",
+    "ITEM000001",
+    "ITEM000001",
+    "ITEM000001",
+    "ITEM000001",
+    "ITEM000003-2",
+    "ITEM000005",
+    "ITEM000005",
+    "ITEM000005"
+  ]
+cashier.print(data)
 ```
-
-## Contributing
-
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/cashier. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
-
 
 ## License
 
